@@ -28,9 +28,15 @@ module.exports = Project;
 Project.hasMany(Task, {
   foreignKey: "projectId",
   sourceKey: "id",
+  onDelete: "cascade",
 });
 
 Task.belongsTo(Project, {
   foreignKey: "projectId",
   targetId: "id",
+  onDelete: "cascade",
 });
+
+// Project.associate = (models) => {
+//   Project.hasMany(models.Task);
+// };
