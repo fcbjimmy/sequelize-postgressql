@@ -1,8 +1,11 @@
 const express = require("express");
+const dotenv = require("dotenv").config();
 const sequelize = require("./database/database");
 const app = express();
 const projectRoutes = require("./routes/projects");
 const taskRoutes = require("./routes/tasks");
+const userRoutes = require("./routes/user");
+
 //middleware
 app.use(express.json());
 
@@ -13,6 +16,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1", projectRoutes);
 app.use("/api/v1", taskRoutes);
+app.use("/api/v1", userRoutes);
 
 //port
 const port = process.env.PORT || 4000;
