@@ -9,11 +9,17 @@ const comparePasswords = require("../utils/comparePassword");
 const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const data = {
+    let data = {
       name,
       email,
       password: await bcrypt.hash(password, 10),
     };
+
+    //Assign admin role to first user
+    const count = await User.count();
+    if (count === 0) {
+      data = { ...data, role: "admin" };
+    }
     //saving the user
     const user = await User.create(data);
     console.log(user);
@@ -50,12 +56,10 @@ const login = async (req, res) => {
     }
 
     let token = createJWT(user);
-    res
-      .status(200)
-      .json({
-        user: { name: user.name, email: user.email, userId: user.id },
-        token,
-      });
+    res.status(200).json({
+      user: { name: user.name, email: user.email, userId: user.id },
+      token,
+    });
   } catch (error) {
     console.log(error);
   }

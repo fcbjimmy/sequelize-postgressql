@@ -6,6 +6,10 @@ const projectRoutes = require("./routes/projects");
 const taskRoutes = require("./routes/tasks");
 const userRoutes = require("./routes/user");
 
+require("./models/Project");
+require("./models/Task");
+require("./models/User");
+
 //middleware
 app.use(express.json());
 
